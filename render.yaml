@@ -6,12 +6,6 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: python -c "from bot import run_bot; run_bot()"
     envVars:
-      - key: TELEGRAM_BOT_TOKEN
-        value: ""  # Set in dashboard
-      - key: GROQ_API_KEY
-        value: ""  # Set in dashboard
-      - key: GEMINI_API_KEY
-        value: ""  # Set in dashboard
       - key: SAFE_DAY_BUFFER
         value: "5"
       - key: REMINDER_HOUR
