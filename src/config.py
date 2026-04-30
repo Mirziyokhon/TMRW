@@ -4,9 +4,8 @@ Create a .env file in the project root with these keys.
 """
 
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()  # Removed for Render - uses environment variables directly
 
 BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
