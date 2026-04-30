@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python -c "from bot import run_bot; run_bot()"
+    startCommand: python bot.py
     envVars:
       - key: SAFE_DAY_BUFFER
         value: "5"
