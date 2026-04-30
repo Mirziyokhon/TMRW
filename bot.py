@@ -63,7 +63,15 @@ async def main():
 
 def run_bot():
     """Entry point for Render."""
-    asyncio.run(main())
+    try:
+        # Try to get the current event loop
+        loop = asyncio.get_running_loop()
+        # If we get here, there's already a running loop
+        loop.create_task(main())
+        loop.run_forever()
+    except RuntimeError:
+        # No running loop, create a new one
+        asyncio.run(main())
 
 
 if __name__ == "__main__":
