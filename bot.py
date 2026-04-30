@@ -15,7 +15,6 @@ from telegram.ext import (
     filters,
     ContextTypes,
 )
-from src.config import BOT_TOKEN
 from src.handlers import (
     start_handler,
     voice_handler,
@@ -33,7 +32,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main():
+async def main():
+    """Main function to run the bot."""
+    from src.config import BOT_TOKEN
+    
     app = Application.builder().token(BOT_TOKEN).build()
 
     # Commands
@@ -48,12 +50,17 @@ def main():
     # Inline button callbacks
     app.add_handler(CallbackQueryHandler(callback_handler))
 
-    # Start the daily reminder scheduler (temporarily disabled for testing)
-    # start_scheduler(app)
+    # Start the daily reminder scheduler
+    start_scheduler(app)
 
     logger.info("🤖 DeadlineBot is running...")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    await app.run_polling(allowed_updates=Update.ALL_TYPES)
+
+
+def run_bot():
+    """Entry point for Render."""
+    asyncio.run(main())
 
 
 if __name__ == "__main__":
-    main()
+    run_bot()
