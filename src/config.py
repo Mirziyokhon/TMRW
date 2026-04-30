@@ -18,9 +18,22 @@ SAFE_DAY_BUFFER = 5
 # What hour (24h) to send daily reminders
 REMINDER_HOUR = 9  # 9:00 AM
 
-if not BOT_TOKEN:
-    raise ValueError("TELEGRAM_BOT_TOKEN is not set in .env")
-if not GROQ_API_KEY:
-    raise ValueError("GROQ_API_KEY is not set in .env")
-if not GEMINI_API_KEY:
-    raise ValueError("GEMINI_API_KEY is not set in .env")
+def check_env_vars():
+    """Check if all required environment variables are set."""
+    missing = []
+    if not BOT_TOKEN:
+        missing.append("TELEGRAM_BOT_TOKEN")
+    if not GROQ_API_KEY:
+        missing.append("GROQ_API_KEY")
+    if not GEMINI_API_KEY:
+        missing.append("GEMINI_API_KEY")
+    
+    if missing:
+        print(f"❌ Missing environment variables: {', '.join(missing)}")
+        print("Please set these in your Render dashboard Environment tab.")
+        return False
+    return True
+
+# Only check if running directly (not when imported)
+if __name__ == "__main__":
+    check_env_vars()

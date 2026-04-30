@@ -34,7 +34,11 @@ logger = logging.getLogger(__name__)
 
 async def main():
     """Main function to run the bot."""
-    from src.config import BOT_TOKEN
+    from src.config import BOT_TOKEN, check_env_vars
+    
+    # Check environment variables first
+    if not check_env_vars():
+        return
     
     app = Application.builder().token(BOT_TOKEN).build()
 
