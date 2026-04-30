@@ -5,6 +5,7 @@ generates mini-steps, and sends smart reminders.
 """
 
 import logging
+import asyncio
 from telegram import Update
 from telegram.ext import (
     Application, CommandHandler, MessageHandler,
@@ -22,7 +23,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-def main():
+async def main():
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start_handler))
@@ -34,7 +35,11 @@ def main():
 
     start_scheduler(app)
 
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    await app.initialize()
+    await app.start()
+    await app.updater.start_polling(allowed_updates=Update.ALL_TYPES)
+    await asyncio.Event().wait()  # run forever
 
 if __name__ == "__main__":
-    main()
+    import asyncio
+    asyncio.run(main())
