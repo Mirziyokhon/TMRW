@@ -63,14 +63,17 @@ async def main():
 
 def run_bot():
     """Entry point for Render."""
+    import asyncio
+    
+    # For Render, we need to handle the existing event loop properly
     try:
-        # Try to get the current event loop
         loop = asyncio.get_running_loop()
-        # If we get here, there's already a running loop
-        loop.create_task(main())
-        loop.run_forever()
+        # If there's already a running loop, use it
+        task = loop.create_task(main())
+        # Keep the main task running
+        loop.run_until_complete(task)
     except RuntimeError:
-        # No running loop, create a new one
+        # No running loop, create one (for local testing)
         asyncio.run(main())
 
 
